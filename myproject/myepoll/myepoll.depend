@@ -1,0 +1,43 @@
+# depslib dependency file v1.0
+1446974834 source:/root/myproject/myepoll/main.cpp
+	<stdio.h>
+	<stdlib.h>
+	<unistd.h>
+	<errno.h>
+	<sys/socket.h>
+	<netdb.h>
+	<fcntl.h>
+	<sys/epoll.h>
+	<string.h>
+	<iostream>
+	<pthread.h>
+	<string.h>
+	"find_search.h"
+	<vector>
+	<map>
+
+1446784605 /root/myproject/myepoll/find_search.h
+	<map>
+	<string>
+
+1446786955 source:/root/myproject/myepoll/find_search.cpp
+	"find_search.h"
+	"string.h"
+	<iostream>
+	<sys/socket.h>
+	<vector>
+
+1444880496 source:/root/myproject/myepoll/CFdList.cpp
+	"cFdList.h"
+	<iostream>
+
+1444880789 /root/myproject/myepoll/cFdList.h
+
+1444969438 source:/root/myproject/myepoll/set_commond.cpp
+	"find_search.h"
+	<iostream>
+
+1445398214 source:/root/myproject/myepoll/Initial.cpp
+	"find_search.h"
+	<iostream>
+
