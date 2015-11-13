@@ -20,6 +20,7 @@ public:
     void funcsale(void* vParam = 0);
     void funclogin(void* nextwords);
     void funcconnect(void* vParam = 0);
+    void funcregist(void* vParam = 0);
 
     map<string, int> Commd;
     void(MyUser::*ppfunc[64])(void*vParam);

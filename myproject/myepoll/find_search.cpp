@@ -5,8 +5,10 @@
 #include <vector>
 #include <mongo/client/dbclient.h>
 #include <mongo/bson/bson.h>
+#include "connectdb.h"
 
 void split(std::vector<string> &arr,string src, char* instead);
+void getnamepwd(string str, string& uname, string& pwd);
 
 int MyUser::find_words(const char *words)//返回-1 表示空字符
 {
@@ -70,12 +72,15 @@ MyUser::MyUser(int fd)
     Commd.insert(pair<string, int>("login",2));
     Commd.insert(pair<string, int>("connect",3));
     Commd.insert(pair<string, int>("connect\r\n",3));
+    Commd.insert(pair<string, int>("regist",4));
+    Commd.insert(pair<string, int>("regist\r\n",4));
     std::cout<<"in Initial\n";
 
     ppfunc[0] = &MyUser::funcbuy;
     ppfunc[1] = &MyUser::funcsale;
     ppfunc[2] = &MyUser::funclogin;
     ppfunc[3] = &MyUser::funcconnect;
+    ppfunc[4] = &MyUser::funcregist;
 }
 
 void MyUser::callfunc(char* str, char* nextwords)
@@ -111,7 +116,7 @@ void MyUser::funclogin(void* nextwords)
 {
     std::cout<<"in funclogin\n"<<std::endl;
     char *p = (char*)nextwords;
-    if(*p == NULL)
+    if( (*p) == NULL)
        {
            send(infd,"please input username",sizeof("please input username"),0);
        }
@@ -122,11 +127,38 @@ void MyUser::funcconnect( void* vParam )
     string str = static_cast<char*>(vParam);
     std::cout<<"in funcconnect: str:"<<str<<std::endl;
 
-    std::vector<string>(strarray);
-    split(strarray, str, "\n");
-    std::cout<<"strarray.size:"<<strarray.size()<<std::endl;
+    string uname,pwd;
+    getnamepwd(str, uname, pwd);
 
+    if(!searchuser(uname, pwd))
+    {
+        char p[] = "no";
+        send(infd, p, sizeof(p), 0);
+    }
+    else
+    {
+        char p[] = "login";
+        send(infd, p, sizeof(p), 0);
+    }
 
+}
+
+void MyUser::funcregist(void* vParam)
+{
+    string str = static_cast<char*>(vParam);
+    std::cout<<"in funcregist: str:"<<str<<std::endl;
+
+    string uname,pwd;
+    getnamepwd(str, uname, pwd);
+
+    if(registuser(uname, pwd))
+    {
+        send(infd,"seccess", sizeof("seccess"), 0);
+    }
+    else
+    {
+        send(infd,"failed", sizeof("failed"), 0);
+    }
 }
 
 void split(std::vector<string> &arr,string src, char* instead)
@@ -156,8 +188,33 @@ void split(std::vector<string> &arr,string src, char* instead)
                 arr.push_back(new1);
                 std::cout<<"out == -1 push_back:"<<new1<<"new1.length"<<new1.length()<<std::endl;
             }
-
         }
 
     }while(out != -1);
+}
+
+void getnamepwd(string str, string& uname, string& pwd)
+{
+    std::vector<string>(strarray);
+    split(strarray, str, ".");
+    std::cout<<"strarray.size:"<<strarray.size()<<std::endl;
+    string password = strarray.back();
+    strarray.pop_back();
+    string username = strarray.back();
+    strarray.pop_back();
+
+    int ipos,isize;
+    if(password.find("password:") != string::npos)
+    {
+        ipos = password.find("password:") + sizeof("password:") - 1;
+        isize = password.length() - ipos;
+        pwd.assign(password, ipos, isize);
+    }
+    if(username.find("username:") != string::npos)
+    {
+        ipos = username.find("username:")+sizeof("username:") - 1;
+        isize = username.length() - ipos;
+        uname.assign(username, ipos, isize);
+    }
+
 }

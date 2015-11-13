@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1446974834 source:/root/myproject/myepoll/main.cpp
+1447386727 source:/root/myproject/myepoll/main.cpp
 	<stdio.h>
 	<stdlib.h>
 	<unistd.h>
@@ -15,17 +15,21 @@
 	"find_search.h"
 	<vector>
 	<map>
+	"connectdb.h"
 
-1446784605 /root/myproject/myepoll/find_search.h
+1447387451 /root/myproject/myepoll/find_search.h
 	<map>
 	<string>
 
-1446786955 source:/root/myproject/myepoll/find_search.cpp
+1447389132 source:/root/myproject/myepoll/find_search.cpp
 	"find_search.h"
 	"string.h"
 	<iostream>
 	<sys/socket.h>
 	<vector>
+	<mongo/client/dbclient.h>
+	<mongo/bson/bson.h>
+	"connectdb.h"
 
 1444880496 source:/root/myproject/myepoll/CFdList.cpp
 	"cFdList.h"
@@ -40,4 +44,15 @@
 1445398214 source:/root/myproject/myepoll/Initial.cpp
 	"find_search.h"
 	<iostream>
+
+1447389025 source:/root/myproject/myepoll/connectdb.cpp
+	"connectdb.h"
+	<mongo/client/dbclient.h>
+	<mongo/bson/bson.h>
+	<string>
+
+1447388669 /root/myproject/myepoll/connectdb.h
+	<mongo/client/dbclient.h>
+	<mongo/bson/bson.h>
+	<string>
 

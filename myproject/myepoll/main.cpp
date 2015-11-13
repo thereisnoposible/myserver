@@ -13,6 +13,7 @@
 #include "find_search.h"
 #include <vector>
 #include <map>
+#include "connectdb.h"
 #define MAXEVENTS 64
 
 using std::vector;
@@ -106,6 +107,7 @@ void* wantknow(void*)
 
 int main(int argc, char *argv[])
 {
+    Initdb();
     int sfd, s;
     int efd;
     struct epoll_event event;

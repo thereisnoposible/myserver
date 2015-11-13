@@ -29,6 +29,11 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lpthread" />
+					<Add option="-lboost_thread" />
+					<Add option="-lboost_filesystem" />
+					<Add option="-lboost_program_options" />
+					<Add library="../../../lib/build/libmongoclient.a" />
+					<Add library="../../../lib64/libpthread_nonshared.a" />
 				</Linker>
 			</Target>
 		</Build>
@@ -36,6 +41,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="connectdb.cpp" />
 		<Unit filename="connectdb.h" />
 		<Unit filename="find_search.cpp" />
 		<Unit filename="find_search.h" />
